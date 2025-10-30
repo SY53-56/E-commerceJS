@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center">
+
+  <!-- Header -->
+  <header class="w-full bg-white shadow-sm py-5 mb-6 px-10 flex justify-between sticky top-0 z-10">
+    <div class="max-w-6xl  flex flex-col gap-6 sm:flex-row items-center justify-between px-4 gap-3">
+      <h1 class="text-2xl font-bold text-gray-800">🛍️ Product Explorer</h1>
+      <input 
+        id="input" 
+        type="text" 
+        placeholder="Search for products..." 
+        class="w-full sm:w-80 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+      
+    </div>
+       <span id="user-info"></span> 
+  </header>
+
+  <!-- Product Container -->
+  <main id="content" class="max-w-6xl mx-auto w-full px-4 pb-10 grid place-items-center">
+    <p class="text-gray-500 text-center mt-10">Loading products...</p>
+  </main>
+ <script src="../productJs/index.js"></script>
+</body>
+</html>
