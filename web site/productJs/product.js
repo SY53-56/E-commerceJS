@@ -16,7 +16,7 @@
       console.log(v)
     })
 
-    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartData = JSON.parse(localStorage.getItem("cartkey")) || [];
     count = cartData.reduce((acc, item) => acc + item.quantity, 0);
     cartCount.textContent = count;
 

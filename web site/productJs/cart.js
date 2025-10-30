@@ -1,15 +1,32 @@
 const cartContainer = document.querySelector(".cart");
+const userInfo = document.querySelector(".user");
 
-// LocalStorage se cart load
+// Get current logged-in user
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+if (!user) {
+  // If no user, redirect to login page
+  alert("Please login to view your cart");
+  window.location.href = "login.html";
+}
+
+if (userInfo) {
+  userInfo.textContent = `${user.name}`;
+}
+
+// Generate user-specific cart key
+const cartKey = `cart_${user.email}`;
+
+// Load user-specific cart
 let cartData = [];
 try {
-  cartData = JSON.parse(localStorage.getItem("cart")) || [];
+  cartData = JSON.parse(localStorage.getItem("cartKey")) || [];
 } catch {
   cartData = [];
 }
 
 // ----------------------------
-// CART RENDER
+// RENDER CART
 // ----------------------------
 function renderCart() {
   cartContainer.innerHTML = "";
@@ -55,7 +72,7 @@ function renderCart() {
     cartContainer.appendChild(div);
   });
 
-  // Price details + Coupon + Clear Cart
+  // Summary section
   const summary = document.createElement("div");
   summary.className = "cart-summary mt-6 p-4 bg-gray-50 rounded";
   summary.innerHTML = `
@@ -84,7 +101,6 @@ function renderCart() {
 // EVENT LISTENERS
 // ----------------------------
 function attachEventListeners() {
-  // Plus button
   document.querySelectorAll(".plus").forEach(btn => {
     btn.addEventListener("click", e => {
       const index = +e.target.dataset.index;
@@ -93,7 +109,6 @@ function attachEventListeners() {
     });
   });
 
-  // Sub button
   document.querySelectorAll(".sub").forEach(btn => {
     btn.addEventListener("click", e => {
       const index = +e.target.dataset.index;
@@ -104,19 +119,6 @@ function attachEventListeners() {
     });
   });
 
-  // Quantity input
-  document.querySelectorAll(".qty-input").forEach(inp => {
-    inp.addEventListener("change", e => {
-      const index = +e.target.dataset.index;
-      const val = parseInt(e.target.value);
-      if (val > 0) {
-        cartData[index].quantity = val;
-        saveAndRender();
-      }
-    });
-  });
-
-  // Delete button
   document.querySelectorAll(".delete").forEach(btn => {
     btn.addEventListener("click", e => {
       const index = +e.target.dataset.index;
@@ -127,59 +129,19 @@ function attachEventListeners() {
     });
   });
 
-  // Buy button
-  document.querySelectorAll(".buy").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const index = +e.target.dataset.index;
-      const item = cartData[index];
-      alert(`Buying ${item.title} for $${(item.price * item.quantity).toFixed(2)}`);
-    });
-  });
-
-  // Image modal
-  document.querySelectorAll(".cart-item img").forEach(img => {
-    img.addEventListener("click", () => {
-      const modal = document.createElement("div");
-      modal.className =
-        "fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50";
-      modal.innerHTML = `
-        <div class="bg-white p-4 rounded">
-          <img src="${img.src}" class="max-h-[80vh] rounded">
-          <button class="close mt-3 bg-red-500 text-white px-4 py-1 rounded">Close</button>
-        </div>`;
-      document.body.appendChild(modal);
-      modal.querySelector(".close").addEventListener("click", () => modal.remove());
-    });
-  });
-
-  // Clear cart
   document.querySelector(".clear-cart")?.addEventListener("click", () => {
     if (confirm("Clear entire cart?")) {
       cartData = [];
       saveAndRender();
     }
   });
-
-  // Coupon
-  document.getElementById("applyCoupon")?.addEventListener("click", () => {
-    const code = document.getElementById("coupon").value.trim();
-    let total = cartData.reduce((sum, it) => sum + it.price * it.quantity, 0);
-    if (code.toUpperCase() === "SAVE10") {
-      total *= 0.9;
-      document.getElementById("couponMsg").textContent =
-        `Coupon applied! New total: $${total.toFixed(2)}`;
-      document.getElementById("grandVal").textContent = total.toFixed(2);
-    } else {
-      document.getElementById("couponMsg").textContent = "Invalid coupon code.";
-    }
-  });
 }
 
 // ----------------------------
-// SAVE + RERENDER
+// SAVE + RERENDER (USER-SPECIFIC)
 // ----------------------------
 function saveAndRender() {
-  localStorage.setItem("cart", JSON.stringify(cartData));
+  localStorage.setItem( JSON.stringify("cartkey"));
   renderCart();
 }
 
