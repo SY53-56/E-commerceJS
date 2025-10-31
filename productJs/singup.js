@@ -13,11 +13,11 @@ form.addEventListener("submit", (e) => {
   }
 
   // Get existing users or empty array
-  let users = JSON.parse(localStorage.getItem("user")) || [];
+  let users = JSON.parse(localStorage.getItem("users")) || [];
 
   // Check if email already exists
   if (users.some(u => u.email === email)) {
-    alert("Email has already been registered");
+    alert("Email already registered. Please login.");
     return;
   }
 
@@ -26,8 +26,8 @@ form.addEventListener("submit", (e) => {
   users.push(newUser);
 
   // Save back to localStorage
-  localStorage.setItem("user", JSON.stringify(users));
+  localStorage.setItem("users", JSON.stringify(users));
 
   alert("Registration successful!");
-  window.location.href = "index.html"; // redirect to login page
+  window.location.href = "login.html"; // redirect to login
 });

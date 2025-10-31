@@ -11,7 +11,7 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem("user")) || [];
+  const users = JSON.parse(localStorage.getItem("users")) || [];
 
   // Find user that matches email + password
   const user = users.find(u => u.email === email && u.password === password);
@@ -22,7 +22,7 @@ form.addEventListener("submit", (e) => {
   }
 
   // ✅ Login successful
-  alert("Login successful!");
-  localStorage.setItem("loggedInUser", JSON.stringify(user)); // optional, for tracking
-  window.location.href = "e-.html"; // redirect to homepage
+  alert(`Welcome, ${user.name}!`);
+  localStorage.setItem("loggedInUser", JSON.stringify(user));
+  window.location.href = "index.html"; // redirect to homepage
 });
