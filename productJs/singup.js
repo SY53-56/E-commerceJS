@@ -29,5 +29,5 @@ form.addEventListener("submit", (e) => {
   localStorage.setItem("user", JSON.stringify(users));
 
   alert("Registration successful!");
-  window.location.href = "e-.html"; // redirect to login page
+  window.location.href = "index.html"; // redirect to login page
 });
