@@ -3,7 +3,7 @@ const userInfo = document.querySelector(".user");
 
 // Get current logged-in user
 const user = JSON.parse(localStorage.getItem("loggedInUser"));
-
+console.log(user)
 if (!user) {
   // If no user, redirect to login page
   alert("Please login to view your cart");
@@ -20,7 +20,7 @@ const cartKey = `cart_${user.email}`;
 // Load user-specific cart
 let cartData = [];
 try {
-  cartData = JSON.parse(localStorage.getItem("cartKey")) || [];
+  cartData = JSON.parse(localStorage.getItem(cartKey , JSON.stringify(cartData))) || [];
 } catch {
   cartData = [];
 }
